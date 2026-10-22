@@ -1,1 +1,33 @@
-<p>cadastrar-inscricao works!</p>
+<div class="container">
+  <h2 class="titulo">Cadastrar inscrição</h2>
+
+  <form #formulario="ngForm" (ngSubmit)="cadastrar(formulario)">
+    <label>
+      Nome
+      <input name="nome" [(ngModel)]="nome" required />
+    </label>
+
+    <label>
+      E-mail
+      <input name="email" type="email" [(ngModel)]="email" required email />
+    </label>
+
+    <label>
+      Oficina
+      <select name="oficina" [(ngModel)]="oficina" required>
+        <option value="" disabled>Selecione uma oficina</option>
+        @for (opcao of oficinas; track opcao) {
+          <option [value]="opcao">{{ opcao }}</option>
+        }
+      </select>
+    </label>
+
+    <button type="submit" [disabled]="formulario.invalid">Cadastrar</button>
+  </form>
+
+  @if (mensagem) {
+    <p class="mensagem">{{ mensagem }}</p>
+  }
+
+  <a routerLink="/lista">Ver lista de inscrições</a>
+</div>

@@ -1,1 +1,45 @@
-<p>lista-inscricoes works!</p>
+<div class="container">
+  <h2>Lista de inscrições</h2>
+
+  <div class="contadores">
+    <span>Total: <strong class="total">{{ total }}</strong></span>
+    <span>Confirmadas: <strong class="confirmadas">{{ confirmadas }}</strong></span>
+    <span>Pendentes: <strong class="pendentes">{{ pendentes }}</strong></span>
+  </div>
+
+  @if (inscricoes.length === 0) {
+    <p>Nenhuma inscrição cadastrada</p>
+  } @else {
+    <ul>
+      @for (inscricao of inscricoes; track inscricao.id) {
+        <li>
+          <div class="dados">
+            <strong>{{ inscricao.nome }}</strong>
+            <span>{{ inscricao.email }}</span>
+            <span>{{ inscricao.oficina }}</span>
+            <span
+              class="status"
+              [class.pendente]="inscricao.status === 'Pendente'"
+              [class.confirmada]="inscricao.status === 'Confirmada'"
+            >
+              {{ inscricao.status }}
+            </span>
+          </div>
+
+          <div class="acoes">
+            <button
+              class="confirmar"
+              [disabled]="inscricao.status === 'Confirmada'"
+              (click)="confirmar(inscricao.id)"
+            >
+              Confirmar inscrição
+            </button>
+            <button class="remover" (click)="remover(inscricao.id)">Remover</button>
+          </div>
+        </li>
+      }
+    </ul>
+  }
+
+  <a routerLink="/">Voltar ao cadastro</a>
+</div>
